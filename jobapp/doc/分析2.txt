@@ -1,0 +1,37 @@
+表jobseeker中的startWorkTime(参加工作时间)并不等同于“工作年限”，因为智联招聘里面只有“工作年限”。
+
+表CareerObjective(求职意向)
+function(期望职位)：如果有多个，就取第一个职位
+industry(期望行业):最后做
+location(工作城市)
+salary
+
+resume表title都是空，想插入数据库，就得把title改成非空，或者给个默认值。
+info长度改成1000
+
+salary字段长度在表workExperience中是45，在表careerobjective中是10，建议统一。而且因为“MORE_FIFTEEN”就有12个。所以建议大于12
+2.表education的字段degree可为空。学历可以为空，比如
+2013.09 - 2014.06   石家庄精英中学   高中
+如果是
+011.09 - 2014.06   河北工业职业技术学院   物流管理   大专
+就有学历
+
+分析0917
+表careerobjective字段industry，长度太短，智联招聘_孙女士_英文客服无销售双休_中文_20180912_1536742817025.html
+industry长度小，是474，改成500,解决方法：只取前三个行业。
+
+fileName=智联招聘_任静_英文客服无销售双休_中文_20180912_1536742587424.html
+education degree can not null，学历
+
+智联招聘_杨生辉_网络运维专员_中文_20180912_1536738058505.html,major is null
+education major can not null，专业名称
+
+智联招聘_张潇清_英文客服无销售双休_中文_20180912_1536742536851.html,position is null
+表workexperience position can null,职位名称
+
+智联招聘_冯智朝_中级JAVA工程师_中文_20180912_1536738122198.html
+表projects的字段projectRole(责任描述)，677，建议700，
+智联招聘_申飞飞_java开发工程师_中文_20180912_1536738237988.html
+表projects的字段projectExp(项目描述)长度1342，建议1400，
+
+

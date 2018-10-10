@@ -1,0 +1,18 @@
+表sys_user
+    status-----------UserStatus
+表careerObjective
+    location---------City
+    industry---------Industry
+    function---------PositionType
+    salary-----------Salary
+表Education
+    degree-----------degree
+表jobseeker
+    city-------------City
+    jobStatus--------JobStatus
+    degree-----------Degree
+表resume
+    publishStatus---ResumeStatus
+表workexperence
+    salary-----------Salary
+    industry---------Industry
