@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/hlhlo-cloud-framework-wx/hlhlo-cloud-framework-wx.iml" filepath="$PROJECT_DIR$/hlhlo-cloud-framework-wx/hlhlo-cloud-framework-wx.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/hlhlo-single.iml" filepath="$PROJECT_DIR$/.idea/hlhlo-single.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jobapp/jobapp2.iml" filepath="$PROJECT_DIR$/jobapp/jobapp2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/translation/transaction.iml" filepath="$PROJECT_DIR$/translation/transaction.iml" />
+    </modules>
+  </component>
+</project>

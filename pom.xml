@@ -13,5 +13,7 @@
 
 	<modules>
 		<module>jobapp</module>
+		<module>hlhlo-cloud-framework-wx</module>
+		<module>translation</module>
 	</modules>
 </project>
