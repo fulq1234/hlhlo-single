@@ -1,6 +1,7 @@
 package com.hlhlo.hlhlocloudframeworkwx;
 
 import com.hlhlo.hlhlocloudframeworkwx.entity.*;
+import com.hlhlo.hlhlocloudframeworkwx.mapper.WxKfAccountMapper;
 import com.hlhlo.hlhlocloudframeworkwx.service.WxKFService;
 import com.hlhlo.hlhlocloudframeworkwx.service.WxTService;
 import org.junit.Test;
@@ -8,6 +9,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.net.URLEncoder;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -20,6 +23,9 @@ public class TestTemplateTest {
 
     @Autowired
     private WxTService wxTemplateService;
+
+    @Autowired
+    private WxKfAccountMapper kfAccountMapper;
 
     @Test
     public void testSetIndustry(){
@@ -67,5 +73,30 @@ public class TestTemplateTest {
         req.setData(ss);
         WxTSendRes template = wxTemplateService.sendTtemplate(accessToken, req);
         System.out.println(template.toString());
+    }
+
+   /* @Test
+    public void aa(){
+        String a = aMapper.test();
+        System.out.println(a);
+    }*/
+
+    @Test
+    public void testaa(){
+        StringBuffer sb = new StringBuffer("https://open.weixin.qq.com/connect/oauth2/authorize?appid=");
+        sb.append("wxec40750a90b478e5");
+        sb.append("&redirect_uri=");
+        sb.append(URLEncoder.encode("http://4641bbe2.ngrok.io/kf/callback"));
+        sb.append("&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect");
+        System.out.println(sb.toString());
+    }
+
+    @Test
+    public void testbb(){
+        WxKfAccount account = new WxKfAccount();
+        account.setKf_wx("ddd");
+        account.setOpenid("ddd");
+        int a = kfAccountMapper.updateKfAccount(account);
+        System.out.println(a);
     }
 }

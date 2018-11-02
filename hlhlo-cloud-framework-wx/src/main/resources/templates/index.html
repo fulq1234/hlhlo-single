@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+
+    <title>呼拉圈</title>
+
+    <!--iconfont css-->
+    <link th:href="@{/font-icon/iconfont.css}" rel="stylesheet">
+    <!--sys css-->
+    <link th:href="@{/css/style.css?k2}" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="wrapper">
+
+      <div>
+        <p class="p-info text-center">呼拉圈公众号</p>
+        <p class="p-info text-center" style="margin-top: 15px;">客服系统需要您的授权</p>
+      </div>
+
+      <form th:action="@{/kf/login}" method="post" style="align:center">
+        请输入一个微信号：<input type="text" name="wxid"/>
+        <input type="submit" value="授权"/>
+      </form>
+      <!--<div class="sq-p">
+        <a class="sq-btn radius" href="msg-list.html" th:href="@{'/kf/login'}">授权</a>
+      </div>-->
+
+      <div class="dsf-info">呼拉圈不会将你的信息提供给第三方</div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/zepto.min.js" th:src="@{/js/zepto.min.js}"></script>
+    <!-- hlhlo.js -->
+    <script src="js/hlhlo.js" th:src="@{/js/hlhlo.js}"></script>
+
+  </body>
+</html>

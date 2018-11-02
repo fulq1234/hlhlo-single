@@ -59,7 +59,7 @@ public class WechatController {
         nscan.setCreateTime(new java.util.Date().getTime());
 
         KFScanTransInfo info = new KFScanTransInfo();
-        info.setKfAccount("ddd");
+        info.setKfAccount("test1@test");
         nscan.setTransInfo(info);
         XStream xStream = new XStream();
         xStream.alias("xml",nscan.getClass());;

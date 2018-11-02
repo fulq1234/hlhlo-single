@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+
+    <title>空空</title>
+
+    <!--iconfont css-->
+    <link href="font-icon/iconfont.css" th:href="@{/font-icon/iconfont.css}" rel="stylesheet">
+    <!--sys css-->
+    <link href="css/style.css?k2" th:href="@{/css/style.css?k2}" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="msg-cont-main">
+
+      <div class="msg-page">
+
+        <div class="msg-main">
+
+          <div class="flex msg-cont-box">
+            <div class="user-img radius">
+              <img th:src="@{images/1.jpg}" alt="空空">
+            </div>
+            <div class="msg-left-text radius m-l15">
+              您好！我想咨询一下
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              您好！有什么可以帮助您的？
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              很高兴为您服务！
+            </div>
+          </div>
+
+          <div class="msg-data text-center">11:30</div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              Can I help you?
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box">
+            <div class="user-img radius">
+              <img src="images/1.jpg" alt="空空">
+            </div>
+            <div class="msg-left-text radius m-l15">
+              1+1等于多少？
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              很高兴为您服务！
+            </div>
+          </div>
+
+          <div class="msg-data text-center">11:30</div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              Can I help you?
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box">
+            <div class="user-img radius">
+              <img th:src="@{images/1.jpg}" alt="空空">
+            </div>
+            <div class="msg-left-text radius m-l15">
+              1+1等于多少？
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              很高兴为您服务！
+            </div>
+          </div>
+
+          <div class="msg-data text-center">11:30</div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              Can I help you?
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box">
+            <div class="user-img radius">
+              <img th:src="@{images/1.jpg}" alt="空空">
+            </div>
+            <div class="msg-left-text radius m-l15">
+              1+1等于多少？
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              很高兴为您服务！
+            </div>
+          </div>
+
+          <div class="msg-data text-center">11:30</div>
+
+          <div class="flex msg-cont-box flex-right">
+            <div class="user-img radius ">
+              <img th:src="@{images/jay.jpg}" alt="Just">
+            </div>
+            <div class="msg-right-text radius m-r15">
+              Can I help you?
+            </div>
+          </div>
+
+          <div class="flex msg-cont-box">
+            <div class="user-img radius">
+              <img th:src="@{images/1.jpg}" alt="空空">
+            </div>
+            <div class="msg-left-text radius m-l15">
+              1+1等于多少？
+            </div>
+          </div>
+
+        </div>
+
+        <div class="msg-enter-box">
+
+          <div class="msg-enter-bg flex">
+            <div class="flex-item">
+              <div class="enter-text" contenteditable="true"></div>
+            </div>
+            <div>
+              <a class="transfer-btn" href="javascript:;" onclick="sendMsg()" ></a>
+            </div>
+          </div>
+
+          <form th:action="@{/kf/sendMsg}" id="ff_id" method="post">
+            <input type="hidden" name="text" id="text"/>
+            <input type="hidden" name="user_openid" value="${user_openid}"/><!--用户的openid-->
+            <input type="hidden" name="kf_openid" value="${kf_openid}"/><!--客服的openid-->
+          </form>
+
+          <div class="">
+            <div></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div>
+
+    </div>
+
+    <!-- jQuery -->
+    <script src="js/zepto.min.js" th:src="@{/js/zepto.min.js}"></script>
+    <!-- hlhlo.js -->
+    <script src="js/hlhlo.js" th:src="@{/js/hlhlo.js}"></script>
+    <script type="text/javascript">
+      function sendMsg(){
+          $("#text").val($(".enter-text").text());
+          $("#ff_id").submit();
+      }
+
+    </script>
+
+  </body>
+</html>
