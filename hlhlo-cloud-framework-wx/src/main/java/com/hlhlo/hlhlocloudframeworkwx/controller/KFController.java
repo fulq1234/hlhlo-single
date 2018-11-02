@@ -35,7 +35,7 @@ public class KFController {
 
     private String wx_appsecret = "87eb940de1cd6a9f02258162b2ccf80d";
 
-    private String redirectUrl = "http://06dae542.ngrok.io/kf/callback";
+    private String redirectUrl = "http://335e9b8a.ngrok.io/kf/callback";
 
     @Autowired
     private WxKfAcccountService kfAcccountService;
@@ -147,5 +147,16 @@ public class KFController {
         int a = kfSessionService.insert(kfSession);
 
         return baseResponse;
+    }
+
+    /**
+     * 跳转页面
+     * @return
+     */
+    @RequestMapping("/transfer")
+    public ModelAndView Transfer(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("transfer-success");
+        return mv;
     }
 }

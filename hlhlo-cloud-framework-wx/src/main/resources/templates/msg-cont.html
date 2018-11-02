@@ -8,6 +8,8 @@
 
     <!--iconfont css-->
     <link href="font-icon/iconfont.css" th:href="@{/font-icon/iconfont.css}" rel="stylesheet">
+    <!-- Link Swiper's CSS -->
+    <link href="swiper/css/swiper.min.css" th:href="@{swiper/css/swiper.min.css}" rel="stylesheet">
     <!--sys css-->
     <link href="css/style.css?k2" th:href="@{/css/style.css?k2}" rel="stylesheet">
 
@@ -163,18 +165,142 @@
               <div class="enter-text" contenteditable="true"></div>
             </div>
             <div>
-              <a class="transfer-btn" href="javascript:;" onclick="sendMsg()" ></a>
+              <a class="transfer-btn" href="javascript:;"></a>
+            </div>
+            <div>
+              <a class="send-btn radius" href="javascript:;" onclick="sendMsg()">发送</a>
             </div>
           </div>
 
-          <form th:action="@{/kf/sendMsg}" id="ff_id" method="post">
-            <input type="hidden" name="text" id="text"/>
-            <input type="hidden" name="user_openid" value="${user_openid}"/><!--用户的openid-->
-            <input type="hidden" name="kf_openid" value="${kf_openid}"/><!--客服的openid-->
-          </form>
+          <div class="transfer-box">
 
-          <div class="">
-            <div></div>
+            <!-- Swiper -->
+            <div class="swiper-container transfer-person">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/5.jpg" th:src="@{/images/5.jpg}" alt="客服1">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">客服1</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/6.jpg" th:src="@{/images/6.jpg}" alt="客服小姐姐">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">客服小姐姐</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/7.jpg" th:src="@{/images/7.jpg}" alt="小豆芽">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">小豆芽</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/jay.jpg" th:src="@{/images/jay.jpg}" alt="Just">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">Just</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/8.jpg" th:src="@{/images/8.jpg}" alt="小七">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">小七</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/9.jpg" th:src="@{/images/9.jpg}" alt="bug小哥哥">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">bug小哥哥</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/10.jpg" th:src="@{/images/10.jpg}" alt="佛系小哥哥">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">佛系小哥哥</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/11.jpg" th:src="@{/images/11.jpg}" alt="哈尔滨第一大漂亮">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">哈尔滨第一大漂亮</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div>
+                    <label>
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <div class="radio-cur">
+                        <div class="person-img radius">
+                          <img src="images/12.jpg" th:src="@{/images/12.jpg}" alt="隔壁老王">
+                        </div>
+                        <div class="f12 c-grey text-center m-t5 line-text">隔壁老王</div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Swiper end -->
+
+            <div class="flex padding-item m-t15 flex-right">
+              <a class="transfer-go-btn dis-red-btn radius" href="transfer-success.html" th:href="@{/kf/transfer}">转接</a>
+            </div>
           </div>
 
         </div>
@@ -188,11 +314,26 @@
     </div>
 
     <!-- jQuery -->
-    <script src="js/zepto.min.js" th:src="@{/js/zepto.min.js}"></script>
+
+	<form th:action="@{/kf/sendMsg}" id="ff_id" method="post">
+		<input type="hidden" name="text" id="text"/>
+		<input type="hidden" name="user_openid" value="${user_openid}"/><!--用户的openid-->
+		<input type="hidden" name="kf_openid" value="${kf_openid}"/><!--客服的openid-->
+	</form>
+	<script src="js/zepto.min.js" th:src="@{/js/zepto.min.js}"></script>
+	<script src="swiper/js/swiper.min.js" th:src="@{/swiper/js/swiper.min.js}"></script>
     <!-- hlhlo.js -->
     <script src="js/hlhlo.js" th:src="@{/js/hlhlo.js}"></script>
     <script type="text/javascript">
-      function sendMsg(){
+	<!-- Initialize Swiper -->
+      var swiper = new Swiper('.transfer-person', {
+        slidesPerView : 'auto',
+        spaceBetween: 7,
+        observer:true,
+        observeParents:true
+      });
+	  
+	  function sendMsg(){
           $("#text").val($(".enter-text").text());
           $("#ff_id").submit();
       }
