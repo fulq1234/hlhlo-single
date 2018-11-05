@@ -21,11 +21,5 @@ public class HlhloCloudJssdkApplicationTests {
         }
     }
 
-    @Test
-    public void aa(){
-        String s = "jsapi_ticket=HoagFKDcsGMVCIY2vOjf9gZmfpRcmA2ue4LIGQYQDu0bWW1r89ThJIBy1lWoTnWpHSt1xd14mdpPcm4GfwmDdQ&noncestr=ZLeaY1ttP3uThDuRgUVkRnbXiVGYRILR&timestamp=1541148308&url=http://06dae542.ngrok.io/kf/index";
-        String signature = CheckUtil.getSha1(s);
-        System.out.println(signature);
-    }
 
 }

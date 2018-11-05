@@ -3,58 +3,76 @@ package com.hlhlo.hlhlocloudjssdk.utils;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Random;
+import java.util.Formatter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class CheckUtil {
-    public static String getRandomString(int length){
-        //1.  定义一个字符串（A-Z，a-z，0-9）即62个数字字母；
-        String str="zxcvbnmlkjhgfdsaqwertyuiopQWERTYUIOPASDFGHJKLZXCVBNM1234567890";
-        //2.  由Random生成随机数
-        Random random=new Random();
-        StringBuffer sb=new StringBuffer();
-        //3.  长度为几就循环几次
-        for(int i=0; i<length; ++i){
-            //从62个的数字或字母中选择
-            int number=random.nextInt(62);
-            //将产生的数字通过length次承载到sb中
-            sb.append(str.charAt(number));
+
+    /**
+     * 微信jssdk，获得签名
+     * @param jsapi_ticket
+     * @param url
+     * @return
+     */
+    public static Map<String, String> sign(String jsapi_ticket, String url) {
+        Map<String, String> ret = new HashMap<String, String>();
+        String nonce_str = create_nonce_str();
+        String timestamp = create_timestamp();
+        String string1;
+        String signature = "";
+
+        //注意这里参数名必须全部小写，且必须有序
+        string1 = "jsapi_ticket=" + jsapi_ticket +
+                "&noncestr=" + nonce_str +
+                "&timestamp=" + timestamp +
+                "&url=" + url;
+        System.out.println(string1);
+
+        try
+        {
+            MessageDigest crypt = MessageDigest.getInstance("SHA-1");
+            crypt.reset();
+            crypt.update(string1.getBytes("UTF-8"));
+            signature = byteToHex(crypt.digest());
         }
-        //将承载的字符转换成字符串
-        return sb.toString();
-    }
-
-//下面四个import放在类名前面 包名后面
-    //import java.io.UnsupportedEncodingException;
-    //import java.security.MessageDigest;
-    //import java.security.NoSuchAlgorithmException;
-    //import java.util.Arrays;
-
-    public static String getSha1(String str){
-        if (null == str || 0 == str.length()){
-            return null;
-        }
-        char[] hexDigits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'a', 'b', 'c', 'd', 'e', 'f'};
-        try {
-            MessageDigest mdTemp = MessageDigest.getInstance("SHA1");
-            mdTemp.update(str.getBytes("UTF-8"));
-
-            byte[] md = mdTemp.digest();
-            int j = md.length;
-            char[] buf = new char[j * 2];
-            int k = 0;
-            for (int i = 0; i < j; i++) {
-                byte byte0 = md[i];
-                buf[k++] = hexDigits[byte0 >>> 4 & 0xf];
-                buf[k++] = hexDigits[byte0 & 0xf];
-            }
-            return new String(buf);
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        catch (NoSuchAlgorithmException e)
+        {
             e.printStackTrace();
         }
-        return str;
+        catch (UnsupportedEncodingException e)
+        {
+            e.printStackTrace();
+        }
+
+        ret.put("url", url);
+        ret.put("jsapi_ticket", jsapi_ticket);
+        ret.put("nonceStr", nonce_str);
+        ret.put("timestamp", timestamp);
+        ret.put("signature", signature);
+
+        return ret;
     }
 
+    private static String byteToHex(final byte[] hash) {
+        Formatter formatter = new Formatter();
+        for (byte b : hash)
+        {
+            formatter.format("%02x", b);
+        }
+        String result = formatter.toString();
+        formatter.close();
+        return result;
+    }
+
+    //随机字符串，由开发者设置传入， 加强安全性（若不填写可能被重放请求） 。随机字符串，不长于32位。推荐使用大小写字母和数字，不同添加请求的nonce须动态生成，若重复将会导致领取失败。
+    private static String create_nonce_str() {
+        return UUID.randomUUID().toString();
+    }
+
+    //时间戳，商户生成从1970年1月1日00:00:00至今的秒数,即当前的时间,且最终需要转换为字符串形式;由商户生成后传入,不同添加请求的时间戳须动态生成，若重复将会导致领取失败！。
+    private static String create_timestamp() {
+        return Long.toString(System.currentTimeMillis() / 1000);
+    }
 }
