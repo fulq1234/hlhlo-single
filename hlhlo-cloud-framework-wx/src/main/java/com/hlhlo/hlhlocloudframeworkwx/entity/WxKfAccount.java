@@ -3,8 +3,11 @@ package com.hlhlo.hlhlocloudframeworkwx.entity;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class WxKfAccount {
+
     private Long id;
     private String openid;
 
@@ -21,5 +24,7 @@ public class WxKfAccount {
     private Integer status;
 
     private Integer accepted_case;
+
+    private Date create_time;
 
 }

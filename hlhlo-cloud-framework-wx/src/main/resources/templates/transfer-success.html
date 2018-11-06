@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
@@ -7,9 +7,9 @@
     <title>呼拉圈</title>
 
     <!--iconfont css-->
-    <link href="font-icon/iconfont.css" rel="stylesheet">
+    <link th:href="@{/font-icon/iconfont.css}" rel="stylesheet">
     <!--sys css-->
-    <link href="css/style.css?k2" rel="stylesheet">
+    <link th:href="@{/css/style.css?k2}" rel="stylesheet">
 
   </head>
   <body>
@@ -24,15 +24,15 @@
       </div>
 
       <div class="sq-p">
-        <a class="return-btn radius" href="msg-list.html">返回</a>
+        <a class="return-btn radius" th:href="@{/kf/msglist}">返回</a>
       </div>
 
     </div>
 
     <!-- jQuery -->
-    <script src="js/zepto.min.js"></script>
+    <script th:src="@{/js/zepto.min.js}"></script>
     <!-- hlhlo.js -->
-    <script src="js/hlhlo.js"></script>
+    <script th:src="@{/js/hlhlo.js}"></script>
 
   </body>
 </html>

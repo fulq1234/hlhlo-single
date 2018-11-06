@@ -16,20 +16,27 @@ public class WxKfSessionServiceImpl implements WxKfSessionService {
     private WxKfSessionMapper kfSessionMapper;
 
     @Override
-    public List<WxKfSession> getContent(String kf_openid, String user_openid) {
-        List<WxKfSession> list = kfSessionMapper.getContent(kf_openid,user_openid);
+    public List<WxKfSession> getContent(WxKfSession kfSession) {
+        kfSession.setStatus(1);
+        List<WxKfSession> list = kfSessionMapper.getContent(kfSession);
         return list;
     }
 
     @Override
-    public List<WxKfSession> getUsersByKfOpenid(String openid) {
-        List<WxKfSession> list = kfSessionMapper.getUsersByKfOpenid(openid);
+    public List<WxKfSession> getUsersByAccountId(Long kfaccountid) {
+        List<WxKfSession> list = kfSessionMapper.getUsersByAccountId(kfaccountid);
         return list;
     }
 
     @Override
     public int insert(WxKfSession account) {
         int a = kfSessionMapper.insert(account);
+        return a;
+    }
+
+    @Override
+    public int updateStatusByAccountId(Integer status, Long accountid) {
+        int a = kfSessionMapper.updateStatusByAccountId(status,accountid);
         return a;
     }
 }

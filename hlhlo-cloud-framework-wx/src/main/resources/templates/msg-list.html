@@ -22,7 +22,7 @@
     <div class="m-t10">
 
       <a th:each="user,userStat : ${list}"
-         th:href="@{'/kf/msgContent?kf_openid='+${current_kfopenid} + '&user_openid=' + ${user.user_openid}}">
+         th:href="@{'/kf/msgContent?user_openid=' + ${user.user_openid}}">
         <div class="flex align-center msg-item-active">
 
           <div class="user-item-img radius">

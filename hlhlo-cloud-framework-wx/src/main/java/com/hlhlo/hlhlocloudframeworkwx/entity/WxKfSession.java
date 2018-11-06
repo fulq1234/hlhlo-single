@@ -1,15 +1,18 @@
 package com.hlhlo.hlhlocloudframeworkwx.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 import java.util.Date;
 
+/**
+ * 聊天记录
+ */
 @Data
 public class WxKfSession {
     private Long id;
 
-    private String kf_openid;
+    //表wx_kfaccount的id
+    private Long kfaccountid;
 
     private String user_openid;
 
@@ -21,4 +24,7 @@ public class WxKfSession {
 
     //操作时间，unix时间戳
     private Date time;
+
+    //当前聊天的客服是否还在接待，1：在接待；0：没再接待。
+    private Integer status;
 }

@@ -91,12 +91,5 @@ public class TestTemplateTest {
         System.out.println(sb.toString());
     }
 
-    @Test
-    public void testbb(){
-        WxKfAccount account = new WxKfAccount();
-        account.setKf_wx("ddd");
-        account.setOpenid("ddd");
-        int a = kfAccountMapper.updateKfAccount(account);
-        System.out.println(a);
-    }
+
 }

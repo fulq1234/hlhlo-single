@@ -69,6 +69,7 @@ public class KFController {
 
     /**
      * 回调地址
+     * @param wxid：微信号
      * @param code
      * @return
      * @throws IOException
@@ -76,11 +77,12 @@ public class KFController {
     @RequestMapping("/callback")
     public ModelAndView callback(
             @RequestParam(value="wxid",required = false) String wxid,
-            @RequestParam(value="code",required = false) String code
+            @RequestParam(value="code",required = false) String code,
+            HttpSession session
             ) throws IOException {
         ModelAndView mv = new ModelAndView();
 
-        //第二步：通过code换取网页授权access_token
+       /* //第二步：通过code换取网页授权access_token
         StringBuffer sb = new StringBuffer("https://api.weixin.qq.com/sns/oauth2/access_token?appid=");
         sb.append(wx_appid);
         sb.append("&secret=");
@@ -92,41 +94,55 @@ public class KFController {
         String respStr = httpUtils.doGet(sb.toString());
         AccessTokenRes res = JsonUtils.jsonToBean(respStr, AccessTokenRes.class);
 
-        String openid = res.getOpenid();//得到客服的openid
+        String openid = res.getOpenid();//得到客服的openid*/
+       String openid = "o36WF0kwKQEOq9-l9bqAiM5Nqlf8";
 
         //绑定openid和微信号。
-        WxKfAccount account = new WxKfAccount();
-        account.setOpenid(openid);
-        account.setKf_wx(wxid);
-        kfAcccountService.updateKfAccount(account);
+        int a = kfAcccountService.updateOpenIdByKfwx(openid,wxid);
 
         WxKfAccount kfAccount = kfAcccountService.queryInfoByOpenid(openid);
 
-        if(kfAccount != null && kfAccount.getOpenid() != null){
-            mv.addObject("current_kfopenid",kfAccount.getOpenid());
-        }
-       // String openid = "o36WF0kwKQEOq9-l9bqAiM5Nqlf8";
-        mv.addObject("current_kfopenid",openid);
+        session.setAttribute("currentKfAccount",kfAccount);//保存当前登录的客服的详细信息
 
-        List<WxKfSession> list = kfSessionService.getUsersByKfOpenid(openid);
+        List<WxKfSession> list = kfSessionService.getUsersByAccountId(kfAccount.getId());//.getUsersByKfOpenid(openid);
         mv.addObject("list",list);
         mv.setViewName("msg-list");
         return mv;
     }
 
+
+
     @RequestMapping("/msgContent")
-    public ModelAndView msgContent(@RequestParam(value="kf_openid",required = false) String kf_openid,
-                                   @RequestParam(value="user_openid",required = false) String user_openid){
+    public ModelAndView msgContent(String user_openid,HttpSession session){
+        log.info("msgContent,user_openid="+user_openid);
         ModelAndView mv = new ModelAndView();
 
-        mv.addObject("kf_openid",kf_openid);
         mv.addObject("user_openid",user_openid);
-        List<WxKfSession> list = kfSessionService.getContent(kf_openid,user_openid);
-        mv.addObject("list",list);
+
+        WxKfAccount kfAccount = (WxKfAccount) session.getAttribute("currentKfAccount");
+
+        //通话记录
+        WxKfSession kfSession = new WxKfSession();
+        kfSession.setKfaccountid(kfAccount.getId());
+        kfSession.setUser_openid(user_openid);
+        List<WxKfSession> talkList = kfSessionService.getContent(kfSession);
+        mv.addObject("talkList",talkList);
+
+        //排除自身的其他在线客服
+
+        List<WxKfAccount> kfList = kfAcccountService.queryKfList(kfAccount.getOpenid(),1);
+
+        mv.addObject("kfList",kfList);
+
         mv.setViewName("msg-cont");
         return mv;
     }
 
+    /**
+     * 发送客服消息
+     * @param kfSession
+     * @return
+     */
     @RequestMapping("/sendMsg")
     @ResponseBody
     public BaseResponse sendMsg(WxKfSession kfSession){
@@ -150,13 +166,61 @@ public class KFController {
     }
 
     /**
-     * 跳转页面
+     * 转接客服
+     * @param user_openid：用户的openid
+     * @param account:被转接的完整客服帐号
      * @return
      */
     @RequestMapping("/transfer")
-    public ModelAndView Transfer(){
+    public ModelAndView Transfer(@RequestParam(value="user_openid",required = false) String user_openid,
+                                 @RequestParam(value="account",required = false) String account,
+                                 HttpSession session){
         ModelAndView mv = new ModelAndView();
+
+        //关闭会话,旧客服的会话
+        WxKfAccount kfAccount = (WxKfAccount) session.getAttribute("currentKfAccount");
+        KFAccountRequest param = new KFAccountRequest();
+        param.setKfAccount(kfAccount.getKf_account());
+        param.setOpenid(user_openid);
+        BaseResponse baseResponse = wxKFService.closeSession(param);
+        log.info("关闭会话,errCode=" + baseResponse.getErrCode() + ",errMsg=" + baseResponse.getErrMsg());
+
+        //创建会话,新客服的会话
+        KFAccountRequest param1 = new KFAccountRequest();
+        param.setKfAccount(account);
+        param.setOpenid(user_openid);
+        BaseResponse baseResponse1 = wxKFService.createSession(param);
+        log.info("创建会话,errCode=" + baseResponse1.getErrCode() + ",errMsg=" + baseResponse1.getErrMsg());
+
+        //update wx_kfsession set status=0 where kfaccountid=session.id;
+        //Wx_kfaacount a = queryByAccount(account);//新客服
+        //insert into wx_kfsession(kfaccountid,user_openid,opercode,text,time) values(a.id,user_openid,'2002','您好，新客服为您服务',new Date());
+        int a = kfSessionService.updateStatusByAccountId(0,kfAccount.getId());
+        WxKfAccount kfAccount_new = kfAcccountService.queryInfoByAccount(account);
+        WxKfSession wxKfSession = new WxKfSession();
+        wxKfSession.setKfaccountid(kfAccount_new.getId());
+        wxKfSession.setUser_openid(user_openid);
+        wxKfSession.setOpercode("2002");
+        wxKfSession.setText("您好，新客服为您服务");
+        wxKfSession.setTime(new Date());
+        kfSessionService.insert(wxKfSession);
+
         mv.setViewName("transfer-success");
+        return mv;
+    }
+
+    /**
+     * 跳转到客户列表
+     * @return
+     */
+    @RequestMapping("/msglist")
+    public ModelAndView msgList(HttpSession session){
+        ModelAndView mv = new ModelAndView();
+        WxKfAccount kfAccount = (WxKfAccount) session.getAttribute("currentKfAccount");//保存当前登录的客服的详细信息
+        List<WxKfSession> list = kfSessionService.getUsersByAccountId(kfAccount.getId());//.getUsersByKfOpenid(openid);
+        mv.addObject("list",list);
+
+        mv.setViewName("msg-list");
         return mv;
     }
 }

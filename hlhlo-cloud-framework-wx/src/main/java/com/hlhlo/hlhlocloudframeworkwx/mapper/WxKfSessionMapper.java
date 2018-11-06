@@ -2,10 +2,7 @@ package com.hlhlo.hlhlocloudframeworkwx.mapper;
 
 import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfAccount;
 import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfSession;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -15,14 +12,38 @@ import java.util.List;
 @Mapper
 public interface WxKfSessionMapper {
 
-    @Select("select * from wx_kfsession where kf_openid = #{kf_openid} and user_openid = #{user_openid} ")
-    List<WxKfSession> getContent(@Param("kf_openid") String kf_openid,@Param("user_openid") String user_openid);
+    /**
+     * 聊天记录
+     * @return
+     */
+    @Select("<script>select * from wx_kfsession where 1=1 <if test='kfaccountid != null '>and kfaccountid = #{kfaccountid} </if> <if test='user_openid!= null'>and user_openid = #{user_openid}</if><if test='status!= null'> and status = #{status}</if></script>")
+    List<WxKfSession> getContent(WxKfSession kfSession);
 
-    @Select("select user_openid from wx_kfsession where kf_openid = #{kf_openid} ")
-    List<WxKfSession> getUsersByKfOpenid(@Param("kf_openid") String openid);
+    /**
+     * 得到在接待的客服的聊天人员列表
+     * @param kfaccountid：客服表(wx_kfaccount)的主键id
+     * @return
+     */
+    @Select("select distinct user_openid from wx_kfsession where kfaccountid = #{kfaccountid} and status=1 ")
+    List<WxKfSession> getUsersByAccountId(Long kfaccountid);
 
-    @Insert("insert into wx_kfsession(kf_openid,user_openid,opercode,text,time) values(#{kf_openid},#{user_openid},#{opercode},#{text},#{time})")
+    /**
+     * 新增聊天记录
+     * @param account
+     * @return
+     */
+    @Insert("insert into wx_kfsession(kfaccountid,user_openid,opercode,text) values(#{kfaccountid},#{user_openid},#{opercode},#{text})")
     int insert(WxKfSession account);
+
+
+    /**
+     * 根据客服账号更新会话状态：update wx_kfsession set status=0 where kfaccountid=session.id;
+     * @param status：当前聊天的客服是否还在接待，1：在接待；0：没再接待。
+     * @param accountid
+     * @return
+     */
+    @Update("update wx_kfsession set status=#{status} where kfaccountid=#{accountid}")
+    int updateStatusByAccountId(@Param(value="status") Integer status,@Param(value="accountid") Long accountid);
 
 
 }

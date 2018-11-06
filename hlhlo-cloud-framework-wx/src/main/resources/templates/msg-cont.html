@@ -20,142 +20,18 @@
 
       <div class="msg-page">
 
-        <div class="msg-main">
-
-          <div class="flex msg-cont-box">
-            <div class="user-img radius">
-              <img th:src="@{images/1.jpg}" alt="空空">
+        <div class="msg-main" id="msgMainText">
+          <!--通话记录，opercode 操作码，2002（客服发送信息），2003（客服接收消息）-->
+         <div th:each="user,rowStat:${talkList}" th:class = "${user.opercode == '2003'}?'flex msg-cont-box':'flex msg-cont-box flex-right'">
+            <div class="user-img radius" th:if="${user.opercode == '2003'}">
+              <img th:src="@{/images/1.jpg}" th:alt="空空">
             </div>
-            <div class="msg-left-text radius m-l15">
-              您好！我想咨询一下
+            <div class="user-img radius" th:if="${user.opercode == '2002'}">
+              <img th:src="@{/images/jay.jpg}" th:alt="Just">
             </div>
-          </div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              您好！有什么可以帮助您的？
+            <div th:class = "${user.opercode == '2003'}?'msg-left-text radius m-l15':'msg-right-text radius m-r15'" th:text="${user.text}">
             </div>
           </div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              很高兴为您服务！
-            </div>
-          </div>
-
-          <div class="msg-data text-center">11:30</div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              Can I help you?
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box">
-            <div class="user-img radius">
-              <img src="images/1.jpg" alt="空空">
-            </div>
-            <div class="msg-left-text radius m-l15">
-              1+1等于多少？
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              很高兴为您服务！
-            </div>
-          </div>
-
-          <div class="msg-data text-center">11:30</div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              Can I help you?
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box">
-            <div class="user-img radius">
-              <img th:src="@{images/1.jpg}" alt="空空">
-            </div>
-            <div class="msg-left-text radius m-l15">
-              1+1等于多少？
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              很高兴为您服务！
-            </div>
-          </div>
-
-          <div class="msg-data text-center">11:30</div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              Can I help you?
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box">
-            <div class="user-img radius">
-              <img th:src="@{images/1.jpg}" alt="空空">
-            </div>
-            <div class="msg-left-text radius m-l15">
-              1+1等于多少？
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              很高兴为您服务！
-            </div>
-          </div>
-
-          <div class="msg-data text-center">11:30</div>
-
-          <div class="flex msg-cont-box flex-right">
-            <div class="user-img radius ">
-              <img th:src="@{images/jay.jpg}" alt="Just">
-            </div>
-            <div class="msg-right-text radius m-r15">
-              Can I help you?
-            </div>
-          </div>
-
-          <div class="flex msg-cont-box">
-            <div class="user-img radius">
-              <img th:src="@{images/1.jpg}" alt="空空">
-            </div>
-            <div class="msg-left-text radius m-l15">
-              1+1等于多少？
-            </div>
-          </div>
-
         </div>
 
         <div class="msg-enter-box">
@@ -168,7 +44,7 @@
               <a class="transfer-btn" href="javascript:;"></a>
             </div>
             <div>
-              <a class="send-btn radius" href="javascript:;" onclick="sendMsg()">发送</a>
+              <a class="send-btn radius" onclick="sendMsg()">发送</a>
             </div>
           </div>
 
@@ -177,129 +53,27 @@
             <!-- Swiper -->
             <div class="swiper-container transfer-person">
               <div class="swiper-wrapper">
-                <div class="swiper-slide">
+                <div class="swiper-slide" th:each="user,rowStat:${kfList}">
                   <div>
                     <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
+                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp" th:value="${user.kf_account}">
                       <div class="radio-cur">
                         <div class="person-img radius">
                           <img src="images/5.jpg" th:src="@{/images/5.jpg}" alt="客服1">
                         </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">客服1</div>
+                        <div class="f12 c-grey text-center m-t5 line-text" th:text="${user.kf_nick}"></div>
                       </div>
                     </label>
                   </div>
                 </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/6.jpg" th:src="@{/images/6.jpg}" alt="客服小姐姐">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">客服小姐姐</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/7.jpg" th:src="@{/images/7.jpg}" alt="小豆芽">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">小豆芽</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/jay.jpg" th:src="@{/images/jay.jpg}" alt="Just">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">Just</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/8.jpg" th:src="@{/images/8.jpg}" alt="小七">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">小七</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/9.jpg" th:src="@{/images/9.jpg}" alt="bug小哥哥">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">bug小哥哥</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/10.jpg" th:src="@{/images/10.jpg}" alt="佛系小哥哥">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">佛系小哥哥</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/11.jpg" th:src="@{/images/11.jpg}" alt="哈尔滨第一大漂亮">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">哈尔滨第一大漂亮</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
-                <div class="swiper-slide">
-                  <div>
-                    <label>
-                      <input class="radio-inp" hidden="hidden" type="radio" name="transfer-inp">
-                      <div class="radio-cur">
-                        <div class="person-img radius">
-                          <img src="images/12.jpg" th:src="@{/images/12.jpg}" alt="隔壁老王">
-                        </div>
-                        <div class="f12 c-grey text-center m-t5 line-text">隔壁老王</div>
-                      </div>
-                    </label>
-                  </div>
-                </div>
+
+
               </div>
             </div>
             <!-- Swiper end -->
 
             <div class="flex padding-item m-t15 flex-right">
-              <a class="transfer-go-btn dis-red-btn radius" href="transfer-success.html" th:href="@{/kf/transfer}">转接</a>
+              <a class="transfer-go-btn dis-red-btn radius" th:value="@{/kf/transfer}" id="btn_transfer" onclick="doTransfer()" >转接</a>
             </div>
           </div>
 
@@ -317,15 +91,14 @@
 
 	<form th:action="@{/kf/sendMsg}" id="ff_id" method="post">
 		<input type="hidden" name="text" id="text"/>
-		<input type="hidden" name="user_openid" value="${user_openid}"/><!--用户的openid-->
-		<input type="hidden" name="kf_openid" value="${kf_openid}"/><!--客服的openid-->
+		<input type="hidden" name="user_openid" th:value="${user_openid}"/><!--用户的openid-->
+		<input type="hidden" name="kfaccountid" th:value="${session.currentKfAccount.id}"/><!--客服的openid-->
 	</form>
 	<script src="js/zepto.min.js" th:src="@{/js/zepto.min.js}"></script>
 	<script src="swiper/js/swiper.min.js" th:src="@{/swiper/js/swiper.min.js}"></script>
     <!-- hlhlo.js -->
     <script src="js/hlhlo.js" th:src="@{/js/hlhlo.js}"></script>
-    <script type="text/javascript">
-	<!-- Initialize Swiper -->
+    <script type="text/javascript" th:inline="javascript">
       var swiper = new Swiper('.transfer-person', {
         slidesPerView : 'auto',
         spaceBetween: 7,
@@ -334,10 +107,49 @@
       });
 	  
 	  function sendMsg(){
+	      if(!$(".enter-text").text()) {//如果输入了空内容，就不能发送
+	          return;
+          }
           $("#text").val($(".enter-text").text());
-          $("#ff_id").submit();
+          console.log($("#ff_id").attr("action"));
+          $.ajax({
+              url:$("#ff_id").attr("action"),
+              type:"post",
+              data:$("#ff_id").serialize(),
+              dataType: "json",
+              success: function(data){
+                  console.log(data);
+                  /*
+                  var html = '';
+                  $.each(data, function(commentIndex, comment){
+                      html += '<div class="comment"><h6>' + comment['username']
+                          + ':</h6><p class="para"' + comment['content']
+                          + '</p></div>';
+                  });*/
+                  var html = "<div class=\"flex msg-cont-box flex-right\">" +
+                      "<div class=\"user-img radius \">" +
+                      "<img th:src=\"@{images/jay.jpg}\" alt=\"Just\">" +
+                      "</div>" +
+                      "<div class=\"msg-right-text radius m-r15\">" +
+                      $("#text").val() +
+                      "</div>" +
+                      "</div>";
+                  console.log(html);
+                  $('#msgMainText').append(html);
+
+                  //清空输入框
+                  $("#text").val("");
+                  $(".enter-text").text("")
+              }
+          });
       }
 
+    /**
+     * 转接
+     */
+    function doTransfer(){
+        window.location.href=$("#btn_transfer").attr("value") + "?user_openid="+[[${user_openid}]]+"&account="+$("input[name='transfer-inp']:checked").val();
+    }
     </script>
 
   </body>

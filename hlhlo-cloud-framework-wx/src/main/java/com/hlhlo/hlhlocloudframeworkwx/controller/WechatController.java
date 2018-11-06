@@ -51,8 +51,8 @@ public class WechatController {
 
         String fromUserName = scan.getFromUserName();
         String toUserName = scan.getToUserName();
-        System.out.println(fromUserName);
-        System.out.println(toUserName);
+        log.info("fromUserName="+fromUserName);
+        log.info("toUserName="+toUserName);
         KFScanResponse nscan = new KFScanResponse();
         nscan.setFromUserName(toUserName);
         nscan.setToUserName(fromUserName);
@@ -64,6 +64,7 @@ public class WechatController {
         XStream xStream = new XStream();
         xStream.alias("xml",nscan.getClass());;
 
+        log.info(xStream.toXML(nscan));
         return xStream.toXML(nscan);
     }
 
