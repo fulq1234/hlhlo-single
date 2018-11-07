@@ -1,7 +1,6 @@
 package com.hlhlo.hlhlocloudframeworkwx.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

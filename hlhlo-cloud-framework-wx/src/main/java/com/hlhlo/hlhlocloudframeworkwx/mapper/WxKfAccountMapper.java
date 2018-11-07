@@ -28,6 +28,18 @@ public interface WxKfAccountMapper {
     @Select("select * from wx_kfaccount where openid = #{openid}")
     WxKfAccount queryInfoByOpenid(String openid);
 
+
+    //update wx_kfsession set status=0 where kfaccountid=session.id;
+    //Wx_kfaacount a = queryByAccount(account);//新客服
+    //insert into wx_kfsession(kfaccountid,user_openid,opercode,text,time) values(a.id,user_openid,'2002','您好，新客服为您服务',new Date());
+    /**
+     * 根据客服账号得到客服的详细信息
+     * @param kf_account
+     * @return
+     */
+    @Select("select * from wx_kfaccount where kf_account=#{kf_account}")
+    WxKfAccount queryInfoByAccount(String kf_account);
+
     /**
      * 查找所有在线客服,排除自身
      * @param openid
@@ -38,17 +50,8 @@ public interface WxKfAccountMapper {
     List<WxKfAccount> queryKfList(@Param("openid") String openid, @Param("status") Integer status);
 
 
-    //update wx_kfsession set status=0 where kfaccountid=session.id;
-    //Wx_kfaacount a = queryByAccount(account);//新客服
-    //insert into wx_kfsession(kfaccountid,user_openid,opercode,text,time) values(a.id,user_openid,'2002','您好，新客服为您服务',new Date());
 
-    /**
-     * 根据客服账号得到客服的详细信息
-     * @param kf_account
-     * @return
-     */
-    @Select("select * from wx_kfaccount where kf_account=#{kf_account}")
-    WxKfAccount queryInfoByAccount(String kf_account);
+
 
 
 }

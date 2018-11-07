@@ -26,111 +26,24 @@
         <div class="flex align-center msg-item-active">
 
           <div class="user-item-img radius">
-            <img src="images/1.jpg" th:src="@{/images/1.jpg}" alt="空空">
+            <img src="images/1.jpg" th:src="@{/images/1.jpg}" alt="用户">
           </div>
 
           <div class="flex-item m-l15">
-            <div class="f18 c-black bold">空空</div>
-            <div class="c-grey m-t5">您好！我想咨询一下</div>
+            <div class="f18 c-black bold">用户</div>
+            <div class="c-grey m-t5" th:text="${user.text}"></div>
           </div>
 
           <div class="text-right">
             <div class="unread-box">
               <div class="unread-num text-center bold">1</div>
             </div>
-            <div class="c-grey f12 m-t10">10:54</div>
+            <!--如果是“今天”就显示hh:mm，否则显示yyyy-MM-dd hh:mm:ss-->
+            <div class="c-grey f12 m-t10" th:text="${#dates.format(new java.util.Date().getTime(),'yyyy-MM-dd') == #dates.format(user.time,'yyyy-MM-dd')?#dates.format(user.time,'hh:mm'):#dates.format(user.time,'yyyy-MM-dd hh:mm:ss')}">10:54</div>
           </div>
 
         </div>
       </a>
-      <a href="/kf/msgContent?kf_openid=o36WF0kwKQEOq9-l9bqAiM5Nqlf8&user_openid=1">
-        <div class="flex align-center msg-item-active">
-
-          <div class="user-item-img radius">
-            <img src="images/1.jpg" th:src="@{/images/1.jpg}" alt="空空">
-          </div>
-
-          <div class="flex-item m-l15">
-            <div class="f18 c-black bold">空空</div>
-            <div class="c-grey m-t5">您好！我想咨询一下</div>
-          </div>
-
-          <div class="text-right">
-            <div class="unread-box">
-              <div class="unread-num text-center bold">1</div>
-            </div>
-            <div class="c-grey f12 m-t10">10:54</div>
-          </div>
-
-        </div>
-      </a>
-
-      <a href="javascript:;">
-        <div class="flex align-center msg-item-active">
-
-          <div class="user-item-img radius">
-            <img src="images/2.jpg"  th:src="@{/images/2.jpg}" alt="刘燕">
-          </div>
-
-          <div class="flex-item m-l15">
-            <div class="f18 c-black bold">刘燕</div>
-            <div class="c-grey m-t5">您好！</div>
-          </div>
-
-          <div class="text-right">
-            <div class="unread-box">
-              <!-- <div class="unread-num text-center bold">1</div> -->
-            </div>
-            <div class="c-grey f12 m-t10">2018-10-28 11:54</div>
-          </div>
-
-        </div>
-      </a>
-
-      <a href="javascript:;">
-        <div class="flex align-center msg-item-active">
-
-          <div class="user-item-img radius">
-            <img src="images/3.jpg"  th:src="@{/images/3.jpg}" alt="小玉子">
-          </div>
-
-          <div class="flex-item m-l15">
-            <div class="f18 c-black bold">小玉子</div>
-            <div class="c-grey m-t5">好的，谢谢</div>
-          </div>
-
-          <div class="text-right">
-            <div class="unread-box">
-              <!-- <div class="unread-num text-center bold">1</div> -->
-            </div>
-            <div class="c-grey f12 m-t10">2018-10-25 15:25</div>
-          </div>
-
-        </div>
-      </a>
-
-      <a href="javascript:;">
-        <div class="flex align-center msg-item-active">
-
-          <div class="user-item-img radius">
-            <img src="images/4.jpg" th:src="@{/images/4.jpg}" alt="空空如也">
-          </div>
-
-          <div class="flex-item m-l15">
-            <div class="f18 c-black bold">空空如也</div>
-            <div class="c-grey m-t5">找不到答案</div>
-          </div>
-
-          <div class="text-right">
-            <div class="unread-box">
-              <!-- <div class="unread-num text-center bold">1</div> -->
-            </div>
-            <div class="c-grey f12 m-t10">2018-10-20 10:54</div>
-          </div>
-
-        </div>
-      </a>
-
 
     </div>
 

@@ -1,8 +1,6 @@
 package com.hlhlo.hlhlocloudframeworkwx.service;
 
-import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfAccount;
 import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfSession;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +14,13 @@ public interface WxKfSessionService {
     public List<WxKfSession> getUsersByAccountId(Long kfaccountid);
 
     /**
+     * 得到最后的一条信息
+     * @param kfSession
+     * @return
+     */
+    WxKfSession getLatelyContent(WxKfSession kfSession);
+
+    /**
      * 根据客服openid和用户的openid,得到二者的聊天记录
      * @param kfSession：
      * @return
@@ -24,10 +29,10 @@ public interface WxKfSessionService {
 
     /**
      * 插入聊天记录
-     * @param account
+     * @param session
      * @return
      */
-    int insert(WxKfSession account);
+    int insert(WxKfSession session);
 
     /**
      * 根据客服账号更新会话状态：update wx_kfsession set status=0 where kfaccountid=session.id;

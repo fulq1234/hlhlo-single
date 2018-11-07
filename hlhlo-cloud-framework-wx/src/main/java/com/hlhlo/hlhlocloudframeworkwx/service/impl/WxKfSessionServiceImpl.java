@@ -1,6 +1,5 @@
 package com.hlhlo.hlhlocloudframeworkwx.service.impl;
 
-import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfAccount;
 import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfSession;
 import com.hlhlo.hlhlocloudframeworkwx.mapper.WxKfSessionMapper;
 import com.hlhlo.hlhlocloudframeworkwx.service.WxKfSessionService;
@@ -26,6 +25,12 @@ public class WxKfSessionServiceImpl implements WxKfSessionService {
     public List<WxKfSession> getUsersByAccountId(Long kfaccountid) {
         List<WxKfSession> list = kfSessionMapper.getUsersByAccountId(kfaccountid);
         return list;
+    }
+
+    @Override
+    public WxKfSession getLatelyContent(WxKfSession kfSession) {
+        WxKfSession wxKfSession = kfSessionMapper.getLatelyContent(kfSession);
+        return wxKfSession;
     }
 
     @Override

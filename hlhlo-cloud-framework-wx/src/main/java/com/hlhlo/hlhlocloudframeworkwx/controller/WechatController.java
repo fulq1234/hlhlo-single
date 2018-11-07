@@ -1,12 +1,13 @@
 package com.hlhlo.hlhlocloudframeworkwx.controller;
 
-import com.hlhlo.hlhlocloudframeworkwx.entity.KFScanResponse;
-import com.hlhlo.hlhlocloudframeworkwx.entity.KFScanTransInfo;
-import com.hlhlo.hlhlocloudframeworkwx.entity.ScanRequest;
+import com.hlhlo.hlhlocloudframeworkwx.entity.*;
+import com.hlhlo.hlhlocloudframeworkwx.service.WxKfAcccountService;
+import com.hlhlo.hlhlocloudframeworkwx.service.WxKfSessionService;
 import com.hlhlo.hlhlocloudframeworkwx.utils.CheckUtil;
+import com.hlhlo.hlhlocloudframeworkwx.utils.JsonUtils;
 import com.thoughtworks.xstream.XStream;
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +17,15 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping("/")
 @Slf4j
 public class WechatController {
+
+    @Autowired
+    private WxKfAcccountService kfAcccountService;
+
+    @Autowired
+    private WxKfSessionService kfSessionService;
+
+    //转接的客服账号
+    private String account = "test1@test";
 
     @ResponseBody
     @GetMapping("/verifyWX")
@@ -47,20 +57,35 @@ public class WechatController {
             log.error("接收到的字符串不能为空");
             return null;
         }
-        log.info(scan.toString());
+        log.info(JsonUtils.beanToJson(scan));
 
         String fromUserName = scan.getFromUserName();
         String toUserName = scan.getToUserName();
-        log.info("fromUserName="+fromUserName);
-        log.info("toUserName="+toUserName);
         KFScanResponse nscan = new KFScanResponse();
         nscan.setFromUserName(toUserName);
         nscan.setToUserName(fromUserName);
         nscan.setCreateTime(new java.util.Date().getTime());
 
-        KFScanTransInfo info = new KFScanTransInfo();
-        info.setKfAccount("test1@test");
-        nscan.setTransInfo(info);
+        //插入数据到数据库
+        WxKfSession wxKfSession = new WxKfSession();
+        if(account != null && !account.equals("")){
+            KFScanTransInfo info = new KFScanTransInfo();
+            info.setKfAccount(account);
+            nscan.setTransInfo(info);
+
+            //opercode操作码，2002（客服发送信息），2003（客服接收消息）
+            //select * from wx_kfaccount where kf_account='test1@test';
+            //insert into wx_kfsession(kfaccountid,user_opeid,opercode,text) values(fromUserName,'2003',scan.getContent);
+            WxKfAccount kfAccount = kfAcccountService.queryInfoByAccount(account);
+            wxKfSession.setKfaccountid(kfAccount.getId());
+        }
+        wxKfSession.setUser_openid(fromUserName);
+        wxKfSession.setOpercode("2003");
+        wxKfSession.setText(scan.getContent());
+        kfSessionService.insert(wxKfSession);
+
+
+        //返回到页面信息
         XStream xStream = new XStream();
         xStream.alias("xml",nscan.getClass());;
 

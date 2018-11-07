@@ -7,11 +7,8 @@ import com.hlhlo.hlhlocloudframeworkwx.service.WxKfSessionService;
 import com.hlhlo.hlhlocloudframeworkwx.utils.HttpUtils;
 import com.hlhlo.hlhlocloudframeworkwx.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -104,9 +101,7 @@ public class KFController {
 
         session.setAttribute("currentKfAccount",kfAccount);//保存当前登录的客服的详细信息
 
-        List<WxKfSession> list = kfSessionService.getUsersByAccountId(kfAccount.getId());//.getUsersByKfOpenid(openid);
-        mv.addObject("list",list);
-        mv.setViewName("msg-list");
+        mv.setViewName("forward:/kf/msglist");
         return mv;
     }
 
@@ -149,6 +144,7 @@ public class KFController {
         log.info("======begin to send msg======");
         kfSession.setOpercode("2002");//操作码，2002（客服发送信息），2003（客服接收消息）
         kfSession.setTime(new Date());
+        log.info(JsonUtils.beanToJson(kfSession));
 
         //微信发送客服消息
         BaseAccessTokenResponse baseAccessTokenResponse = wxKFService.getAccessToken(this.wx_appid,this.wx_appsecret);
@@ -218,6 +214,18 @@ public class KFController {
         ModelAndView mv = new ModelAndView();
         WxKfAccount kfAccount = (WxKfAccount) session.getAttribute("currentKfAccount");//保存当前登录的客服的详细信息
         List<WxKfSession> list = kfSessionService.getUsersByAccountId(kfAccount.getId());//.getUsersByKfOpenid(openid);
+        //得到最近的一次聊天记录
+        WxKfSession query = new WxKfSession();
+        query.setKfaccountid(kfAccount.getId());
+        query.setStatus(1);
+        for(WxKfSession temp : list){
+            query.setUser_openid(temp.getUser_openid());
+            WxKfSession one = kfSessionService.getLatelyContent(query);
+            temp.setTime(one.getTime());
+            temp.setText(one.getText());
+        }
+        log.info(JsonUtils.beanToJson(list));
+
         mv.addObject("list",list);
 
         mv.setViewName("msg-list");

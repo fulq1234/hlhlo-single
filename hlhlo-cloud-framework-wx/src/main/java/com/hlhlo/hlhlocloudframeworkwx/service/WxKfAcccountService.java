@@ -1,7 +1,6 @@
 package com.hlhlo.hlhlocloudframeworkwx.service;
 
 import com.hlhlo.hlhlocloudframeworkwx.entity.WxKfAccount;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
